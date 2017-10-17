@@ -17,10 +17,6 @@ public class UserRestController extends AbstractUserController {
 
     static final String REST_URL = "/rest/users";
 
-    public UserRestController(UserService service) {
-        super(service);
-    }
-
     @Override
     @GetMapping
     public List<User> getAll() {
