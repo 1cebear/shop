@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     @JsonManagedReference
@@ -41,5 +41,9 @@ public class Order extends BaseEntity{
         super(id);
         this.orderRowList = orderRowList;
         this.commentary = commentary;
+    }
+
+    public Order() {
+
     }
 }

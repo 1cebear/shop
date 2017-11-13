@@ -14,7 +14,7 @@ public interface CrudOrderRowRepository extends JpaRepository<OrderRow, Integer>
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM OrderRow or WHERE or.id=:id AND or.Order.id=:orderId")
+    @Query("DELETE FROM OrderRow o WHERE o.id=:id AND o.order.id=:orderId")
     int delete(@Param("id") int id, @Param("orderId") int orderId);
 
 
@@ -22,6 +22,6 @@ public interface CrudOrderRowRepository extends JpaRepository<OrderRow, Integer>
     OrderRow save(OrderRow order);
 
 
-    @Query("SELECT or FROM OrderRow or WHERE or.Order.id=:orderId")
+    @Query("SELECT o FROM OrderRow o WHERE o.order.id=:orderId")
     List<OrderRow> getAll(@Param("orderId") int orderId);
 }

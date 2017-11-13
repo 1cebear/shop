@@ -1,11 +1,11 @@
 package ru.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -22,6 +22,10 @@ public class Item extends BaseEntity {
     @Column(name = "description", nullable = false)
     @NotBlank
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    @JsonManagedReference
+    private Set<OrderRow> orderRowSet;
 
     public String getName() {
         return name;
@@ -52,5 +56,10 @@ public class Item extends BaseEntity {
         this.name = name;
         this.price = price;
         this.description = description;
+    }
+
+    public Item()
+    {
+
     }
 }

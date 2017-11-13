@@ -11,11 +11,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orderrows")
-public class OrderRow extends BaseEntity{
+public class OrderRow extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     @NotNull
     private Order order;
 
@@ -31,7 +32,8 @@ public class OrderRow extends BaseEntity{
     @Range(min = 0)
     private double sum;
 
-    @Column(name = "item", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "item_id", nullable = false)
     @NotNull
     private Item item;
 
@@ -82,5 +84,9 @@ public class OrderRow extends BaseEntity{
         this.price = price;
         this.sum = sum;
         this.item = item;
+    }
+
+    public OrderRow() {
+
     }
 }
