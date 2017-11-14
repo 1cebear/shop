@@ -1,5 +1,6 @@
 package ru.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -47,6 +48,18 @@ public class User extends BaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     @BatchSize(size = 200)
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @JsonManagedReference
+    private Set<Order> orderSet;
+
+    public Set<Order> getOrder() {
+        return orderSet;
+    }
+
+    public void setOrder(Set<Order> order) {
+        this.orderSet = order;
+    }
 
     public String getName() {
         return name;
