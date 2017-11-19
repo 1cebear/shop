@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS orderrows;
 DROP TABLE IF EXISTS items;
+DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS orders;
 
 
@@ -27,16 +28,28 @@ CREATE TABLE user_roles
 CREATE TABLE orders
 (
   id         INTEGER PRIMARY KEY AUTO_INCREMENT,
-  name       VARCHAR(100) NOT NULL,
-  commentary VARCHAR(100) NOT NULL
+  user_id    INTEGER,
+  user_name  VARCHAR(100) NOT NULL,
+  email      VARCHAR(100) NOT NULL,
+  commentary VARCHAR(100)
+);
+
+CREATE TABLE categories
+(
+  id          INTEGER PRIMARY KEY AUTO_INCREMENT,
+  name        VARCHAR(100) NOT NULL,
+  description VARCHAR(100)
 );
 
 CREATE TABLE items
 (
   id          INTEGER PRIMARY KEY AUTO_INCREMENT,
+  category_id INTEGER NOT NULL,
   name        VARCHAR(100) NOT NULL,
-  price       DOUBLE       NOT NULL,
-  description VARCHAR(100) NOT NULL
+  price       DOUBLE              DEFAULT 0,
+  description VARCHAR(100),
+  FOREIGN KEY (category_id) REFERENCES categories (id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE orderrows
@@ -44,9 +57,9 @@ CREATE TABLE orderrows
   id       INTEGER PRIMARY KEY AUTO_INCREMENT,
   order_id INTEGER NOT NULL,
   item_id  INTEGER NOT NULL,
-  quantity INTEGER NOT NULL,
-  price    DOUBLE  NOT NULL,
-  sum      DOUBLE  NOT NULL,
+  quantity INTEGER             DEFAULT 0,
+  price    DOUBLE              DEFAULT 0,
+  sum      DOUBLE              DEFAULT 0,
   FOREIGN KEY (order_id) REFERENCES orders (id)
     ON DELETE CASCADE,
   FOREIGN KEY (item_id) REFERENCES items (id)

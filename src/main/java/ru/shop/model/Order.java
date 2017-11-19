@@ -1,5 +1,6 @@
 package ru.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -20,9 +21,10 @@ public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "user_name", nullable = false)
     @NotNull
     private String userName;
 

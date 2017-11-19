@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "orderrows")
 public class OrderRow extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
@@ -34,6 +34,7 @@ public class OrderRow extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
+    @JsonBackReference
     @NotNull
     private Item item;
 

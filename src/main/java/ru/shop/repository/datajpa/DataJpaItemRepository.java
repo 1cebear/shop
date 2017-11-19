@@ -11,25 +11,31 @@ import java.util.List;
 public class DataJpaItemRepository implements ItemRepository {
 
     @Autowired
-    private CrudItemRepository crudRepository;
+    private CrudItemRepository crudItemRepository;
 
+    @Autowired
+    private CrudCategoryRepository crudCategoryRepository;
 
-    public Item save(Item user) {
-        return crudRepository.save(user);
+    public Item save(Item item, int categoryId) {
+        if (!item.isNew() && get(item.getId(), categoryId) == null)
+            return null;
+        item.setCategory(crudCategoryRepository.getOne(categoryId));
+        return crudItemRepository.save(item);
     }
 
 
-    public boolean delete(int id) {
-        return crudRepository.delete(id) != 0;
+    public boolean delete(int id, int categoryId) {
+        return crudItemRepository.delete(id, categoryId) != 0;
     }
 
 
-    public Item get(int id) {
-        return crudRepository.findOne(id);
+    public Item get(int id, int categoryId) {
+        Item item = crudItemRepository.findOne(id);
+        return item != null && item.getCategory().getId() == categoryId ? item : null;
     }
 
 
-    public List<Item> getAll() {
-        return crudRepository.findAll();
+    public List<Item> getAll(int categoryId) {
+        return crudItemRepository.getAll(categoryId);
     }
 }

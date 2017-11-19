@@ -21,25 +21,25 @@ public class ItemServiceImpl implements ItemService {
         this.repository = repository;
     }
 
-    public Item save(Item item) {
+    public Item save(Item item, int categoryId) {
         Assert.notNull(item, "item must not be null");
-        return repository.save(item);
+        return repository.save(item, categoryId);
     }
 
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(int id, int categoryId) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(id, categoryId), id);
     }
 
-    public Item get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+    public Item get(int id, int categoryId) throws NotFoundException {
+        return checkNotFoundWithId(repository.get(id, categoryId), id);
     }
 
-    public List<Item> getAll() {
-        return repository.getAll();
+    public List<Item> getAll(int categoryId) {
+        return repository.getAll(categoryId);
     }
 
-    public void update(Item item) {
+    public void update(Item item, int categoryId) {
         Assert.notNull(item, "item must not be null");
-        repository.save(item);
+        repository.save(item, categoryId);
     }
 }

@@ -1,5 +1,6 @@
 package ru.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -23,9 +24,14 @@ public class Item extends BaseEntity {
     @NotBlank
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
     @JsonManagedReference
     private Set<OrderRow> orderRowSet;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    @JsonBackReference
+    private Category category;
 
     public String getName() {
         return name;
@@ -51,15 +57,23 @@ public class Item extends BaseEntity {
         this.description = description;
     }
 
-    public Item(Integer id, String name, double price, String description) {
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Item(Integer id, String name, double price, String description, Category category) {
         super(id);
         this.name = name;
         this.price = price;
         this.description = description;
+        this.category = category;
     }
 
-    public Item()
-    {
+    public Item() {
 
     }
 }

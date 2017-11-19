@@ -49,7 +49,7 @@ public class User extends BaseEntity {
     @BatchSize(size = 200)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonManagedReference
     private Set<Order> orderSet;
 

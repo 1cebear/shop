@@ -17,30 +17,30 @@ public class AbstractItemController {
     @Autowired
     private ItemService service;
 
-    public List<Item> getAll() {
+    public List<Item> getAll(int categoryId) {
         log.info("getAll");
-        return service.getAll();
+        return service.getAll(categoryId);
     }
 
-    public Item get(int id) {
+    public Item get(int id, int categoryId) {
         log.info("get {}", id);
-        return service.get(id);
+        return service.get(id, categoryId);
     }
 
-    public Item create(Item item) {
+    public Item create(Item item, int categoryId) {
         log.info("create {}", item);
         checkNew(item);
-        return service.save(item);
+        return service.save(item, categoryId);
     }
 
-    public void delete(int id) {
+    public void delete(int id, int categoryId) {
         log.info("delete {}", id);
-        service.delete(id);
+        service.delete(id, categoryId);
     }
 
-    public void update(Item item, int id) {
+    public void update(Item item, int id, int categoryId) {
         log.info("update {}", item);
         checkIdConsistent(item, id);
-        service.update(item);
+        service.update(item, categoryId);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public class DataJpaOrderRowRepository implements OrderRowRepository {
 
     @Autowired
-    private CrudOrderRowRepository crudOrderRowRepositoryy;
+    private CrudOrderRowRepository crudOrderRowRepository;
 
     @Autowired
     private CrudOrderRepository crudOrderRepository;
@@ -20,19 +20,19 @@ public class DataJpaOrderRowRepository implements OrderRowRepository {
         if (!orderRow.isNew() && get(orderRow.getId(), orderId) == null)
             return null;
         orderRow.setOrder(crudOrderRepository.getOne(orderId));
-        return crudOrderRowRepositoryy.save(orderRow);
+        return crudOrderRowRepository.save(orderRow);
     }
 
     public boolean delete(int id, int orderId) {
-        return crudOrderRowRepositoryy.delete(id, orderId) != 0;
+        return crudOrderRowRepository.delete(id, orderId) != 0;
     }
 
     public OrderRow get(int id, int orderId) {
-        OrderRow orderRow = crudOrderRowRepositoryy.findOne(id);
+        OrderRow orderRow = crudOrderRowRepository.findOne(id);
         return orderRow != null && orderRow.getOrder().getId() == orderId ? orderRow : null;
     }
 
     public List<OrderRow> getAll(int orderId) {
-        return crudOrderRowRepositoryy.getAll(orderId);
+        return crudOrderRowRepository.getAll(orderId);
     }
 }
