@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse">
             <form class="navbar-form navbar-right">
 
-
+                <input type="button" id = "checkOrder" name="checkOrder" value="You choose 0 items for 0$">
             </form>
         </div>
     </div>

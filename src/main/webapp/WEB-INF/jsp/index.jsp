@@ -11,12 +11,21 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
+<script type="text/javascript" src="resources/js/main.js"></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron">
-  <div class="container">
-    <p/>
-
-  </div>
+    <div class="mainArea">
+        <div class="leftArea">
+            <ul id="categoriesList"></ul>
+        </div>
+        <div class="rightArea">
+            <textarea id="description" name="description" class="textAreaDescription"></textarea>
+            <br>
+            Price: <input type="number" id="price" name="price" step="0.01" disabled>
+            Add to order: <input type="number" id="quantity" name="quantity" disabled>
+            <input type="button" id="addToOrder" value="Add to order" disabled/>
+        </div>
+    </div>
 </div>
 </body>
 </html>
