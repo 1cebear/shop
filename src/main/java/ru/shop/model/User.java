@@ -50,7 +50,7 @@ public class User extends BaseEntity {
     private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @JsonManagedReference
+    @JsonManagedReference(value = "d_name")
     private Set<Order> orderSet;
 
     public Set<Order> getOrder() {

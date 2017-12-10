@@ -40,7 +40,7 @@ INSERT INTO items (category_id, name, price, description) VALUES
   (1, 'item 2', 115, '2nd item'),
   (2, 'item 3', 96, '3rd item');
 
-INSERT INTO orders (user_id, user_name, email, commentary) VALUES
+INSERT INTO orders (user_id, name, email, commentary) VALUES
   (1, 'User', 'user@yandex.ru', ''),
   (1, 'User', 'user@yandex.ru', '');
 

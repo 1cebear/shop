@@ -29,7 +29,7 @@ CREATE TABLE orders
 (
   id         INTEGER PRIMARY KEY AUTO_INCREMENT,
   user_id    INTEGER,
-  user_name  VARCHAR(100) NOT NULL,
+  name  VARCHAR(100) NOT NULL,
   email      VARCHAR(100) NOT NULL,
   commentary VARCHAR(100)
 );

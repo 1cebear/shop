@@ -16,7 +16,7 @@ public class OrderRow extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
+    @JsonBackReference(value = "c_name")
     @NotNull
     private Order order;
 
@@ -34,7 +34,7 @@ public class OrderRow extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "b_name")
     @NotNull
     private Item item;
 

@@ -181,6 +181,7 @@
             <version>${jackson-json.version}</version>
         </dependency>
 
+
         <!-- Webjars (static dependencies distributed as JAR files) -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
@@ -224,6 +225,23 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>noty</artifactId>
             <version>${webjars-noty.version}</version>
+        </dependency>
+
+        <!--security-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
         </dependency>
     </dependencies>
 

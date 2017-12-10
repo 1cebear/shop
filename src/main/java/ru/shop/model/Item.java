@@ -25,12 +25,12 @@ public class Item extends BaseEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
-    @JsonManagedReference
+    @JsonManagedReference(value = "b_name")
     private Set<OrderRow> orderRowSet;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "a_name")
     private Category category;
 
     public String getName() {

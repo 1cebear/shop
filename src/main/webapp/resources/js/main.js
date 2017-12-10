@@ -1,5 +1,7 @@
 var categoriesURL = "http://localhost:8080/rest/categories";
 
+var ordersURL = "http://localhost:8080/rest/orders";
+
 var itemsArray;
 
 var currentCategoryElem;
@@ -38,6 +40,14 @@ $(document).ready(function () {
             addUpdateRow();
         }
         $('#checkOrder').prop('value', "You choose " + totalQuantity + " items for " + totalSum + "$");
+    });
+
+    $("#checkOrder").click(function () {
+        checkOrder();
+    });
+
+    $("#createCategory").click(function () {
+        $('#editCategory').modal();
     });
 });
 
@@ -119,7 +129,7 @@ function findItemById() {
         url: categoriesURL + "/" + currentCategoryId + "/items/" + currentItemId,
         dataType: "json", // data type of response
         success: function (data) {
-            console.log('findStory success: ' + data.name);
+            console.log('findItemById success: ' + data.name);
             currentItem = data;
             $('#description').val(currentItem.name + ":\n\n " + currentItem.description);
             $('#price').val(currentItem.price);
@@ -154,3 +164,71 @@ function addUpdateRow() {
     }
 }
 
+
+function checkOrder() {
+    $('#orderTable tbody tr').remove();
+    var currentRow;
+    var $tbody = $('#orderTable').append('<tbody />').children('tbody');
+    for (var i = 0; i < currentOrderRows.length; i++) {
+        currentRow = currentOrderRows[i];
+        $tbody.append('<tr class="item"/>').children('tr:last')
+            .append("<td id='itemId' style='display: none'>" + currentRow.item.id + "</td>")
+            .append("<td >" + currentRow.item.name + "</td>")
+            .append("<td >" + currentRow.price + "</td>")
+            .append("<td >" + currentRow.quantity + "</td>")
+            .append("<td >" + currentRow.sum + "</td>");
+    }
+    $('#createOrder').modal();
+}
+
+function createOrder() {
+    console.log('createOrder');
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: ordersURL,
+        dataType: "text",
+        data: orderToJSON(null),
+        success: function () {
+            alert('Order created successfully');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('createOrder error: ' + textStatus);
+        }
+    });
+}
+
+function orderToJSON(id) {
+    return JSON.stringify({
+        "id": id == null ? null : id,
+        "name": $('#userName').val(),
+        "email": $('#userEmail').val()
+    });
+}
+
+function createCategory() {
+    console.log('createCategory');
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: categoriesURL,
+        dataType: "text",
+        data: categoryToJSON(null),
+        success: function () {
+            alert('Category created successfully');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('createCategory error: ' + textStatus);
+        }
+    });
+    refresh();
+}
+
+function categoryToJSON(id) {
+    return JSON.stringify({
+        "id": id == null ? null : id,
+        "name": $('#categoryName').val(),
+        "description": $('#categoryDescription').val(),
+        "itemSet" : []
+    });
+}

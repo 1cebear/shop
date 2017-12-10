@@ -13,7 +13,7 @@ import java.util.List;
 public class Order extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
-    @JsonManagedReference
+    @JsonManagedReference(value = "c_name")
     private List<OrderRow> orderRowList;
 
     @Column(name = "commentary", nullable = false)
@@ -21,12 +21,12 @@ public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "d_name")
     private User user;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "name", nullable = false)
     @NotNull
-    private String userName;
+    private String name;
 
     @Column(name = "email", nullable = false)
     @NotNull
@@ -58,11 +58,11 @@ public class Order extends BaseEntity {
     }
 
     public String getUserName() {
-        return userName;
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -77,12 +77,18 @@ public class Order extends BaseEntity {
 
     }
 
-    public Order(Integer id, List<OrderRow> orderRowList, String commentary, User user, String userName, String email) {
+    public Order(Integer id, List<OrderRow> orderRowList, String commentary, User user, String name, String email) {
         super(id);
         this.orderRowList = orderRowList;
         this.commentary = commentary;
         this.user = user;
-        this.userName = userName;
+        this.name = name;
+        this.email = email;
+    }
+
+    public Order(Integer id, String name, String email) {
+        super(id);
+        this.name = name;
         this.email = email;
     }
 }

@@ -19,7 +19,7 @@ public class Category extends BaseEntity {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    @JsonManagedReference
+    @JsonManagedReference(value = "a_name")
     private Set<Item> itemSet;
 
     public Category(Integer id, String name, String description) {
