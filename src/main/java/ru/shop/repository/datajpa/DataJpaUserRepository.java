@@ -3,6 +3,7 @@ package ru.shop.repository.datajpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.shop.model.User;
 import ru.shop.repository.UserRepository;
 
@@ -17,7 +18,7 @@ public class DataJpaUserRepository implements UserRepository {
     @Autowired
     private CrudUserRepository crudRepository;
 
-
+    @Transactional
     public User save(User user) {
         return crudRepository.save(user);
     }

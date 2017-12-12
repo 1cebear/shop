@@ -18,7 +18,7 @@ public class Category extends BaseEntity {
     @NotBlank
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
     @JsonManagedReference(value = "a_name")
     private Set<Item> itemSet;
 
@@ -46,6 +46,5 @@ public class Category extends BaseEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 }

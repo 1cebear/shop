@@ -28,7 +28,7 @@ public class Item extends BaseEntity {
     @JsonManagedReference(value = "b_name")
     private Set<OrderRow> orderRowSet;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     @JsonBackReference(value = "a_name")
     private Category category;
@@ -76,4 +76,5 @@ public class Item extends BaseEntity {
     public Item() {
 
     }
+
 }

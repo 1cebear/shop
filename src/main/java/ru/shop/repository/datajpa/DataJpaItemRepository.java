@@ -2,6 +2,7 @@ package ru.shop.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.shop.model.Item;
 import ru.shop.repository.ItemRepository;
 
@@ -16,10 +17,11 @@ public class DataJpaItemRepository implements ItemRepository {
     @Autowired
     private CrudCategoryRepository crudCategoryRepository;
 
+    @Transactional
     public Item save(Item item, int categoryId) {
         if (!item.isNew() && get(item.getId(), categoryId) == null)
             return null;
-        item.setCategory(crudCategoryRepository.getOne(categoryId));
+        item.setCategory(crudCategoryRepository.findOne(categoryId));
         return crudItemRepository.save(item);
     }
 

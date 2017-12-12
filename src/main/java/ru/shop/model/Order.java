@@ -2,6 +2,8 @@ package ru.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -91,4 +93,5 @@ public class Order extends BaseEntity {
         this.name = name;
         this.email = email;
     }
+
 }

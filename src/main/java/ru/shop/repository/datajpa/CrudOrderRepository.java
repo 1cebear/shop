@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Transactional(readOnly = true)
-public interface CrudOrderRepository  extends JpaRepository<Order, Integer> {
+public interface CrudOrderRepository extends JpaRepository<Order, Integer> {
 
     @Transactional
     @Modifying
@@ -23,8 +23,8 @@ public interface CrudOrderRepository  extends JpaRepository<Order, Integer> {
     @Transactional
     Order save(Order order);
 
-
-    Order findOne(Integer id);
+    @Query("SELECT o FROM Order o where o.id=:itemId")
+    Order findOne(@Param("itemId") Integer id);
 
 
     List<Order> findAll(Sort sort);

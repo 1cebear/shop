@@ -2,6 +2,7 @@ var categoriesURL = "http://localhost:8080/rest/categories";
 
 var ordersURL = "http://localhost:8080/rest/orders";
 
+
 var itemsArray;
 
 var currentCategoryElem;
@@ -9,6 +10,8 @@ var currentCategoryElem;
 var clickFlag;
 
 var currentCategoryId;
+
+var currentCategory;
 
 var currentItemId;
 
@@ -49,6 +52,9 @@ $(document).ready(function () {
     $("#createCategory").click(function () {
         $('#editCategory').modal();
     });
+    $("#createItem").click(function () {
+        $('#editItem').modal();
+    });
 });
 
 function findAllCategories() {
@@ -82,6 +88,16 @@ function findItemsByCategory() {
         url: categoriesURL + "/" + currentCategoryId + "/items",
         dataType: "json", // data type of response
         success: renderItemsByCategory
+    });
+
+    $.ajax({
+        type: 'GET',
+        url: categoriesURL + '/' + currentCategoryId,
+        dataType: "json",
+        success: function (data) {
+            console.log('findById success: ' + data.name);
+            currentCategory = data;
+        }
     });
 }
 
@@ -189,13 +205,15 @@ function createOrder() {
         url: ordersURL,
         dataType: "text",
         data: orderToJSON(null),
-        success: function () {
+        success: function (response) {
             alert('Order created successfully');
+            createOrderRows(JSON.parse(response));
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert('createOrder error: ' + textStatus);
         }
     });
+
 }
 
 function orderToJSON(id) {
@@ -205,6 +223,7 @@ function orderToJSON(id) {
         "email": $('#userEmail').val()
     });
 }
+
 
 function createCategory() {
     console.log('createCategory');
@@ -229,6 +248,66 @@ function categoryToJSON(id) {
         "id": id == null ? null : id,
         "name": $('#categoryName').val(),
         "description": $('#categoryDescription').val(),
-        "itemSet" : []
+        "itemSet": []
+    });
+}
+
+function createOrderRows(response) {
+    for (var i = 0; i < currentOrderRows.length; i++) {
+        var currentRow = currentOrderRows[i];
+        console.log('createOrderRows');
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: ordersURL + "/" + response.id + "/rows",
+            dataType: "text",
+            data: rowToJSON(null, currentRow, response),
+            success: function () {
+                alert('OrderRow created successfully');
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('createOrderRows error: ' + textStatus);
+            }
+        });
+    }
+}
+
+function rowToJSON(id, currentRow, response) {
+    return JSON.stringify({
+        "id": id == null ? null : id,
+        "order": response,
+        "item": currentItem,
+        "quantity": currentRow.quantity,
+        "price": currentRow.price,
+        "sum": currentRow.sum
+    });
+}
+
+function createItem() {
+    console.log('createItem');
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        url: categoriesURL + "/" + currentCategoryId + "/items",
+        dataType: "text",
+        data: itemToJSON(null),
+        success: function () {
+            alert('Item created successfully');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('createItem error: ' + textStatus);
+        }
+    });
+    refresh();
+}
+
+function itemToJSON(id) {
+    return JSON.stringify({
+        "id": id == null ? null : id,
+        "name": $('#itemName').val(),
+        "price": $('#itemPrice').val(),
+        "description": $('#itemDescription').val(),
+        "category": currentCategory
     });
 }

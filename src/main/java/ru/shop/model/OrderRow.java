@@ -1,23 +1,27 @@
 package ru.shop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "orderrows")
 public class OrderRow extends BaseEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference(value = "c_name")
     @NotNull
+    @NotFound(action = NotFoundAction.IGNORE)
     private Order order;
 
     @Column(name = "quantity")
@@ -90,4 +94,5 @@ public class OrderRow extends BaseEntity {
     public OrderRow() {
 
     }
+
 }

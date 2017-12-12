@@ -10,6 +10,7 @@ import ru.shop.model.OrderRow;
 
 import java.util.List;
 
+@Transactional(readOnly = true)
 public interface CrudOrderRowRepository extends JpaRepository<OrderRow, Integer> {
 
     @Transactional

@@ -46,7 +46,7 @@ public class OrderRowRestController extends AbstractOrderRowController {
         OrderRow created = super.create(orderRow, orderId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
+                .buildAndExpand(orderId, created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }

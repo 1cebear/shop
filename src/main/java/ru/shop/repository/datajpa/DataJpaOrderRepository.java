@@ -2,6 +2,7 @@ package ru.shop.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.shop.model.Order;
 import ru.shop.repository.OrderRepository;
 
@@ -13,6 +14,7 @@ public class DataJpaOrderRepository implements OrderRepository {
     @Autowired
     private CrudOrderRepository crudRepository;
 
+    @Transactional
     public Order save(Order order) {
         return crudRepository.save(order);
     }

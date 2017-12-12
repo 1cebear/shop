@@ -22,8 +22,8 @@ public interface CrudCategoryRepository extends JpaRepository<Category, Integer>
     @Transactional
     Category save(Category category);
 
-
-    Category findOne(Integer id);
+    @Query("SELECT c FROM Category c where c.id=:categoryId")
+    Category findOne(@Param("categoryId") Integer id);
 
 
     List<Category> findAll(Sort sort);
