@@ -3,8 +3,11 @@ package ru.shop.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import ru.shop.ActiveUser;
 import ru.shop.model.User;
 import ru.shop.repository.UserRepository;
 import ru.shop.util.exception.NotFoundException;
@@ -15,8 +18,8 @@ import static ru.shop.util.ValidationUtil.checkNotFound;
 import static ru.shop.util.ValidationUtil.checkNotFoundWithId;
 
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
 
@@ -56,5 +59,13 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         repository.save(user);
+    }
+
+    public ActiveUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User u = repository.getByEmail(email.toLowerCase());
+        if (u == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new ActiveUser(u);
     }
 }
