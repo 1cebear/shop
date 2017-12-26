@@ -20,17 +20,17 @@
 
 
     <http>
-        <intercept-url pattern="/index" access="isAnonymous()"/>
+        <!--<intercept-url pattern="/index" access="isAnonymous()"/>-->
         <intercept-url pattern="/register" access="isAnonymous()"/>
 
-        <intercept-url pattern="/rest/**" access="isAuthenticated()"/>
+        <!--<intercept-url pattern="/rest/**" access="isAuthenticated()"/>-->
 
         <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<intercept-url pattern="/**" access="isAuthenticated()" />-->
 
         <csrf disabled="true"/>
 
-        <form-login login-page="/index" default-target-url="/main"
+        <form-login login-page="/index" default-target-url="/index"
                     authentication-failure-url="/index?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/index"/>

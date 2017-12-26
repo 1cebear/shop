@@ -55,6 +55,10 @@ $(document).ready(function () {
     $("#createItem").click(function () {
         $('#editItem').modal();
     });
+
+    $("#register").click(function () {
+       $("#Register").modal();
+    });
 });
 
 function findAllCategories() {

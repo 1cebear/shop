@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -17,6 +19,7 @@
     <div class="mainArea">
         <div class="leftArea">
             <input type="button" id="createCategory" value="Create category"/>
+
             <input type="button" id="createItem" value="Create item"/>
             <ul id="categoriesList"></ul>
         </div>
@@ -111,7 +114,7 @@
                             </button>
                         </div>
                     </div>
-                    </form:form>
+                </form:form>
             </div>
         </div>
     </div>
@@ -164,5 +167,40 @@
     </div>
 </div>
 
+<div class="modal fade" id="Register">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="modalTitleRegister"></h2>
+            </div>
+            <div class="container">
+                <h2> <spring:message text="Register"/></h2>
+
+                <form:form modelAttribute="user" class="form-horizontal" method="post" action="${'register'}"
+                           charset="utf-8" accept-charset="UTF-8">
+
+                    <spring:message text="Name" var="userName"/>
+                    <tags:inputField label='${userName}' name="name"/>
+
+                    <spring:message text="Email" var="userEmail"/>
+                    <tags:inputField label='${userEmail}' name="email"/>
+
+                    <spring:message text="Password" var="userPassword"/>
+                    <tags:inputField label='${userPassword}' name="password" inputType="password"/>
+
+
+                    <div class="form-group">
+                        <div class="col-xs-offset-2 col-xs-10">
+                            <button type="submit" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
