@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.shop.model.Order;
 import ru.shop.repository.OrderRepository;
+import ru.shop.util.EmailSender;
 import ru.shop.util.exception.NotFoundException;
 
 import java.util.List;
@@ -21,7 +22,9 @@ public class OrderServiceImpl implements OrderService {
 
     public Order save(Order order) {
         Assert.notNull(order, "order must not be null");
-        return repository.save(order);
+        Order saved = repository.save(order);
+        EmailSender.send(saved.getEmail());
+        return saved;
     }
 
     public void delete(int id) throws NotFoundException {

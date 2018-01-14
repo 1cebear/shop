@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.shop.ActiveUser;
 import ru.shop.model.User;
 import ru.shop.service.UserService;
 
@@ -48,5 +49,10 @@ public class UserRestController extends AbstractUserController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @GetMapping("/active")
+    public User getActiveUser() {
+        return super.get(ActiveUser.id());
     }
 }

@@ -10,6 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -18,9 +19,11 @@
 <div class="jumbotron">
     <div class="mainArea">
         <div class="leftArea">
-            <input type="button" id="createCategory" value="Create category"/>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <input type="button" id="createCategory" value="Create category"/>
 
-            <input type="button" id="createItem" value="Create item"/>
+                <input type="button" id="createItem" value="Create item"/>
+            </sec:authorize>
             <ul id="categoriesList"></ul>
         </div>
         <div class="rightArea">
@@ -53,22 +56,24 @@
                         </thead>
 
                     </table>
-                    <div class="form-group">
-                        <label for="description" class="control-label col-xs-3">Name</label>
+                    <sec:authorize access="isAnonymous()">
+                        <div class="form-group">
+                            <label for="description" class="control-label col-xs-3">Name</label>
 
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" id="userName" name="userName"
-                                   placeholder="Name">
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="userName" name="userName"
+                                       placeholder="Name">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description" class="control-label col-xs-3">Email</label>
+                        <div class="form-group">
+                            <label for="description" class="control-label col-xs-3">Email</label>
 
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" id="userEmail" name="userEmail"
-                                   placeholder="Email">
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" id="userEmail" name="userEmail"
+                                       placeholder="Email">
+                            </div>
                         </div>
-                    </div>
+                    </sec:authorize>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button class="btn btn-primary" type="button" onclick="createOrder()">
@@ -175,7 +180,7 @@
                 <h2 class="modal-title" id="modalTitleRegister"></h2>
             </div>
             <div class="container">
-                <h2> <spring:message text="Register"/></h2>
+                <h2><spring:message text="Register"/></h2>
 
                 <form:form modelAttribute="user" class="form-horizontal" method="post" action="${'register'}"
                            charset="utf-8" accept-charset="UTF-8">

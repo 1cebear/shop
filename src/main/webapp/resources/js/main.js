@@ -2,6 +2,7 @@ var categoriesURL = "http://localhost:8080/rest/categories";
 
 var ordersURL = "http://localhost:8080/rest/orders";
 
+var userURL = "http://localhost:8080/rest/users";
 
 var itemsArray;
 
@@ -23,6 +24,8 @@ var totalSum;
 
 var totalQuantity;
 
+var currentUser;
+
 refresh();
 
 function refresh() {
@@ -32,6 +35,23 @@ function refresh() {
     currentOrderRows = [];
     totalQuantity = 0;
     totalSum = 0;
+}
+
+function findUser() {
+    console.log('findUser:');
+    $.ajax({
+        type: 'GET',
+        url: userURL + "/active",
+        dataType: "json", // data type of response
+        success: function (data) {
+            console.log('findUser success: ' + data.name);
+            currentUser = data;
+            if (currentUser != null) {
+                $("#userName").val(currentUser.name);
+                $("#userEmail").val(currentUser.email);
+            }
+        }
+    });
 }
 
 $(document).ready(function () {
@@ -57,7 +77,7 @@ $(document).ready(function () {
     });
 
     $("#register").click(function () {
-       $("#Register").modal();
+        $("#Register").modal();
     });
 });
 
